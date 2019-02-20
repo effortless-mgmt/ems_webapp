@@ -9,13 +9,7 @@ Vue.use(VueAxios, axios);
 
 import router from "../router";
 import tempStore from "./tempStore";
-
-const axiosInstance = axios.create();
-axios.interceptors.request.use(config => {
-  config.headers.common["Authorization"] =
-    "Bearer " + localStorage.getItem("access_token");
-  return config;
-});
+import accountStore from "./accountStore";
 
 //##################################
 // For when auth is actually needed.
@@ -36,7 +30,6 @@ axios.interceptors.request.use(config => {
 
 export default new Vuex.Store({
   state: {
-    axios: axios,
     temps: [],
     companies: [],
     departments: [],
@@ -57,6 +50,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    account: accountStore,
     temps: tempStore
   },
   mounted() {
