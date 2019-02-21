@@ -13,14 +13,11 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 
-import BootstrapVue from "bootstrap-vue";
-Vue.use(BootstrapVue);
-
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-
 import Router from "./router.js";
 import Store from "./store/store.js";
+
+import BootstrapVue from "bootstrap-vue";
+Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false;
 

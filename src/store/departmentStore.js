@@ -4,19 +4,25 @@ import { base_url } from "../utils/networkUtils";
 export default {
   namespaced: true,
   state: {
-    temps: []
+    departments: [],
+    isLoading: true
   },
   mutations: {
-    set(state, temps) {
-      state.temps = temps;
+    set(state, departments) {
+      state.departments = departments;
+    },
+    setLoading(state, isLoading) {
+      state.isLoading = isLoading;
     }
   },
   actions: {
     refresh(context) {
+      context.commit("setLoading", true);
       api
-        .get(base_url + "/api/user?primaryRole=2")
+        .get(base_url + "/api/department")
         .then(response => {
           context.commit("set", response.data);
+          context.commit("setLoading", false);
         })
         .catch(e => {});
     }

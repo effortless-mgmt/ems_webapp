@@ -1,16 +1,42 @@
 <template>
   <div>
     <h1>Login</h1>
-    <button @click="login">Login</button>
+    <b-container>
+      <b-form @submit="login">
+        <b-form-group label="Username" label-for="usernameInput">
+          <b-form-input
+            id="usernameInput"
+            v-model="username"
+            type="text"
+            placeholder="Enter username"
+          />
+        </b-form-group>
+
+        <b-form-group label="Password" label-for="password-input">
+          <b-form-input v-model="password" type="password" placeholder="Enter password"/>
+        </b-form-group>
+        <b-button type="submit" variant="primary">Login</b-button>
+      </b-form>
+    </b-container>
   </div>
 </template>
 
 <script>
 export default {
   name: "Login",
+  data() {
+    return {
+      username: "jd",
+      password: "SecurePassword"
+    };
+  },
   methods: {
     login() {
-      this.$store.dispatch("account/login");
+      console.log("Trying to login.");
+      this.$store.dispatch("account/login", {
+        username: this.username,
+        password: this.password
+      });
     }
   }
 };

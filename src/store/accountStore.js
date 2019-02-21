@@ -1,6 +1,7 @@
 import Router from "../router";
 
-import * as api from "../utils/networkUtils";
+import { api } from "../utils/networkUtils";
+import { base_url } from "../utils/networkUtils";
 
 export default {
   namespaced: true,
@@ -28,8 +29,9 @@ export default {
   },
   actions: {
     login(context, user) {
-      api.post("/api/auth/login", user).then(response => {
+      api.post(base_url + "/api/auth/login", user).then(response => {
         context.commit("set", response.data.token);
+        Router.push("/");
       });
     }
   }

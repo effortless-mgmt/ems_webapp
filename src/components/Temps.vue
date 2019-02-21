@@ -1,15 +1,18 @@
 <template>
   <div>
     <h1>Temps</h1>
-    <div v-for="(item) in temps" :key="item.id">
-      <li>{{ item.userName }}</li>
-    </div>
+    <b-container>
+      <b-list-group>
+        <b-list-group-item v-for="(item) in temps" :key="item.id">
+          <div>{{ item.firstName }} {{ item.lastName }}</div>
+        </b-list-group-item>
+      </b-list-group>
+    </b-container>
   </div>
 </template>
 
 <script>
 export default {
-  name: "temps",
   computed: {
     temps() {
       return this.$store.state.temps.temps;
