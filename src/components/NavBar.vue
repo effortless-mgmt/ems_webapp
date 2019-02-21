@@ -13,6 +13,9 @@
         <b-nav-item v-if="isLoggedIn">
           <router-link to="/temps">Temps</router-link>
         </b-nav-item>
+        <b-nav-item v-if="isLoggedIn">
+          <router-link to="/workperiods">Work Periods</router-link>
+        </b-nav-item>
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
