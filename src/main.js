@@ -1,8 +1,28 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
 
-Vue.config.productionTip = false
+import "es6-promise/auto";
+
+import Vuex from "vuex";
+Vue.use(Vuex);
+
+import VueRouter from "vue-router";
+Vue.use(VueRouter);
+
+import axios from "axios";
+import VueAxios from "vue-axios";
+Vue.use(VueAxios, axios);
+
+import Router from "./router.js";
+import Store from "./store/store.js";
+
+import BootstrapVue from "bootstrap-vue";
+Vue.use(BootstrapVue);
+
+Vue.config.productionTip = false;
 
 new Vue({
+  router: Router,
   render: h => h(App),
-}).$mount('#app')
+  store: Store
+}).$mount("#app");
