@@ -51,11 +51,6 @@ export default {
     department: Object,
     address: Object,
     appointments: [Array, Object]
-  },
-  methods: {
-    print() {
-      console.log(this.workPeriods[0].assignedUsers);
-    }
   }
 };
 </script>

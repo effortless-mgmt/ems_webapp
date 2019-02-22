@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Home</h1>
-
     <div v-if="!isLoading">
       <departmentDetails
         v-for="(item) in departments"
@@ -19,7 +17,7 @@
 </template>
 
 <script>
-import departmentDetails from "./DepartmentDetails";
+import departmentDetails from "./department/DepartmentDetails";
 
 export default {
   computed: {

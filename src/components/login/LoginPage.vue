@@ -23,7 +23,6 @@
 
 <script>
 export default {
-  name: "Login",
   data() {
     return {
       username: "jd",
@@ -43,7 +42,4 @@ export default {
 </script>
 
 <style>
-.test {
-  background: red;
-}
 </style>
