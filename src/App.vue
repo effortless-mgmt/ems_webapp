@@ -14,8 +14,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 
-import NavBar from "./components/NavBar.vue";
-import Login from "./components/Login.vue";
+import NavBar from "./components/TheNavBar.vue";
 
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -39,5 +38,8 @@ h1 {
   text-align: center;
   margin-top: 40px;
   margin-bottom: 20px;
+}
+.router-link-active {
+  font-weight: 600;
 }
 </style>

@@ -5,8 +5,10 @@ Vue.use(Vuex);
 import tempStore from "./tempStore";
 import accountStore from "./accountStore";
 import departmentStore from "./departmentStore";
+import workperiodStore from "./workperiodStore";
 
 export default new Vuex.Store({
+  namespaced: true,
   state: {
     temps: [],
     companies: [],
@@ -30,6 +32,7 @@ export default new Vuex.Store({
   modules: {
     account: accountStore,
     temps: tempStore,
-    departments: departmentStore
+    departments: departmentStore,
+    workPeriods: workperiodStore
   }
 });

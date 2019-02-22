@@ -1,10 +1,15 @@
 <template>
   <div>
-    <h1>Home</h1>
-
-    <b-list-group v-if="!isLoading">
-      <b-list-group-item v-for="(item) in departments" :key="item.id">{{item.name}}</b-list-group-item>
-    </b-list-group>
+    <div v-if="!isLoading">
+      <departmentDetails
+        v-for="(item) in departments"
+        :key="item.id"
+        :name="item.name"
+        description="<insert description>"
+        :workPeriods="getDepartmentWorkPeriods(item.id)"
+        :address="item.address"
+      ></departmentDetails>
+    </div>
     <div v-else class="d-flex justify-content-center mb-3">
       <b-spinner class="m1-auto" type="grow" label="Loading..."/>
     </div>
@@ -12,10 +17,15 @@
 </template>
 
 <script>
+import departmentDetails from "./department/DepartmentDetails";
+
 export default {
   computed: {
     departments() {
       return this.$store.state.departments.departments;
+    },
+    workPeriods() {
+      return this.$store.state.workPeriods.workPeriods;
     },
     isLoading() {
       return this.$store.state.departments.isLoading;
@@ -23,6 +33,19 @@ export default {
   },
   mounted() {
     this.$store.dispatch("departments/refresh");
+    this.$store.dispatch("workPeriods/refresh");
+  },
+  components: {
+    departmentDetails
+  },
+  methods: {
+    getDepartmentWorkPeriods(id) {
+      const wps = this.workPeriods.filter(wp => wp.department.id === id);
+      // for (var i = 0; i < wps.length; i++) {
+      //   console.log(wps[i].assignedusers);
+      // }
+      return wps;
+    }
   }
 };
 </script>
