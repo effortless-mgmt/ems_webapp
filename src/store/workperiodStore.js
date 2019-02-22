@@ -11,6 +11,11 @@ export default {
       state.workPeriods = workPeriods;
     }
   },
+  getters: {
+    getById: state => id => {
+      return state.workPeriods.find(wp => wp.id === id);
+    }
+  },
   actions: {
     refresh(context) {
       api

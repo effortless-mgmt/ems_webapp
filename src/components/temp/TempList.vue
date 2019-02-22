@@ -9,24 +9,24 @@
       </div>
     </b-container>
     <b-list-group v-if="temps.length">
-      <TempListItem v-for="(item) in tempsABC" :key="item.id" :temp="item"></TempListItem>
+      <UserListItem v-for="(item) in tempsABC" :key="item.id" :user="item"></UserListItem>
     </b-list-group>
   </div>
 </template>
 
 <script>
-import TempListItem from "./TempListItem";
+import UserListItem from "../user/UserListItem";
 export default {
   computed: {
     temps() {
-      return this.$store.state.temps.temps;
+      return this.$store.state.users.temps;
     },
     tempsABC() {
       return this.tempsAlphabetial();
     }
   },
   mounted() {
-    this.$store.dispatch("temps/refresh");
+    this.$store.dispatch("users/getTemps");
   },
   methods: {
     tempsAlphabetial() {
@@ -46,7 +46,7 @@ export default {
     }
   },
   components: {
-    TempListItem
+    UserListItem
   }
 };
 </script>

@@ -4,19 +4,26 @@ import { base_url } from "../utils/networkUtils";
 export default {
   namespaced: true,
   state: {
-    temps: []
+    users: [],
+    temps: [],
+    currentUser: null
   },
   mutations: {
-    set(state, temps) {
+    setTemps(state, temps) {
       state.temps = temps;
     }
   },
+  getters: {
+    getUserByUserName: state => userName => {
+      return state.temps.find(u => u.userName === userName);
+    }
+  },
   actions: {
-    refresh(context) {
+    getTemps(context) {
       api
         .get(base_url + "/api/user?primaryRole=2")
         .then(response => {
-          context.commit("set", response.data);
+          context.commit("setTemps", response.data);
         })
         .catch(e => {});
     }
