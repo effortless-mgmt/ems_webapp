@@ -41,9 +41,6 @@ export default {
   methods: {
     getDepartmentWorkPeriods(id) {
       const wps = this.workPeriods.filter(wp => wp.department.id === id);
-      // for (var i = 0; i < wps.length; i++) {
-      //   console.log(wps[i].assignedusers);
-      // }
       return wps;
     }
   }

@@ -12,17 +12,9 @@ export default {
     setTemps(state, temps) {
       state.temps = temps;
     }
-    // setUser(state, user) {
-    //   state.currentUser = user;
-    //   console.log(user.firstName);
-    // },
-    // clearCurrentUser(state) {
-    //   state.currentUser = null;
-    // }
   },
   getters: {
     getUserByUserName: state => userName => {
-      console.log("Trying to find user by username.");
       return state.temps.find(u => u.userName === userName);
     }
   },
@@ -35,13 +27,5 @@ export default {
         })
         .catch(e => {});
     }
-    // getUser(context, id) {
-    //   api.get(base_url + "/api/user/" + id).then(response => {
-    //     context.commit("setUser", response.data);
-    //   });
-    // },
-    // clearCurrentUser(context) {
-    //   context.commit("clearCurrentUser");
-    // }
   }
 };
