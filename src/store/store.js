@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-import tempStore from "./tempStore";
+import userStore from "./userStore";
 import accountStore from "./accountStore";
 import departmentStore from "./departmentStore";
 import workperiodStore from "./workperiodStore";
@@ -31,7 +31,7 @@ export default new Vuex.Store({
   },
   modules: {
     account: accountStore,
-    temps: tempStore,
+    users: userStore,
     departments: departmentStore,
     workPeriods: workperiodStore
   }

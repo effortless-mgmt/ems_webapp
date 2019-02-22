@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-list-group-item>{{ workPeriod.name }}</b-list-group-item>
-    <b-container fluid>
+    <b-list-group-item @click="goToWorkPeriod()">{{ workPeriod.name }}</b-list-group-item>
+    <b-container fluid v-if="showAppointments">
       <AppointmentList :appointments="appointmentsSorted"></AppointmentList>
     </b-container>
   </div>
@@ -14,6 +14,9 @@ export default {
     workPeriod: {
       type: Object,
       required: true
+    },
+    showAppointments: {
+      type: Boolean
     }
   },
   computed: {
@@ -22,6 +25,14 @@ export default {
         var startA = new Date(a.start);
         var startB = new Date(b.start);
         return startA < startB;
+      });
+    }
+  },
+  methods: {
+    goToWorkPeriod() {
+      this.$router.push({
+        name: "workPeriod",
+        params: { id: this.workPeriod.id }
       });
     }
   },
