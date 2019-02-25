@@ -1,16 +1,28 @@
 import { api } from "../utils/networkUtils";
 import { base_url } from "../utils/networkUtils";
 
+function initialState() {
+  return {
+    users: [],
+    temps: []
+  };
+}
+
 export default {
   namespaced: true,
   state: {
     users: [],
-    temps: [],
-    currentUser: null
+    temps: []
   },
   mutations: {
     setTemps(state, temps) {
       state.temps = temps;
+    },
+    clear(state) {
+      const s = initialState();
+      Object.keys(s).forEach(key => {
+        state[key] = s[key];
+      });
     }
   },
   getters: {
@@ -25,7 +37,7 @@ export default {
         .then(response => {
           context.commit("setTemps", response.data);
         })
-        .catch(e => {});
+        .catch(() => {});
     }
   }
 };

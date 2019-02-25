@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar/>
+    <navbar v-if="isLoggedIn"/>
     <router-view></router-view>
   </div>
 </template>
@@ -21,6 +21,11 @@ import "bootstrap/dist/css/bootstrap.css";
 
 export default {
   name: "app",
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters["account/isLoggedIn"];
+    }
+  },
   components: {
     navbar: NavBar
   }

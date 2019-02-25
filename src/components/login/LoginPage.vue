@@ -25,13 +25,13 @@
 export default {
   data() {
     return {
-      username: "jd",
-      password: "SecurePassword"
+      username: "",
+      password: ""
     };
   },
   methods: {
-    login() {
-      console.log("Trying to login.");
+    login(evt) {
+      evt.preventDefault();
       this.$store.dispatch("account/login", {
         username: this.username,
         password: this.password

@@ -4,9 +4,6 @@
     <b-navbar-toggle target="nav_collapse"/>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
-        <b-nav-item v-if="!isLoggedIn">
-          <router-link to="/login">Login</router-link>
-        </b-nav-item>
         <b-nav-item v-if="isLoggedIn">
           <router-link class="nav-link" to="/" exact>Home</router-link>
         </b-nav-item>
@@ -24,29 +21,30 @@
           <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
         </b-nav-form>
       </b-navbar-nav>
-      <b-nav-item-dropdown right>
-        <!-- Using button-content slot -->
-        <template slot="button-content">User</template>
-        <b-dropdown-item>
-          <router-link to="/login">Signout</router-link>
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
+      <b-navbar-nav>
+        <b-nav-item-dropdown right>
+          <!-- Using button-content slot -->
+          <template slot="button-content">User</template>
+          <b-dropdown-item @click="logout()">Sign out</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
-import accountStore from "../store/accountStore";
 export default {
   name: "navbar",
   computed: {
     isLoggedIn() {
-      return accountStore.getters.isLoggedIn;
+      return this.$store.getters["account/isLoggedIn"];
     }
   },
   methods: {
-    goToHome: function() {
-      console.log("Home");
+    logout() {
+      this.$store.dispatch("account/logout").then(() => {
+        this.$router.push("/login");
+      });
     }
   }
 };

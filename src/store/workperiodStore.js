@@ -1,6 +1,12 @@
 import { api } from "../utils/networkUtils";
 import { base_url } from "../utils/networkUtils";
 
+function initialState() {
+  return {
+    workPeriods: []
+  };
+}
+
 export default {
   namespaced: true,
   state: {
@@ -9,6 +15,12 @@ export default {
   mutations: {
     set(state, workPeriods) {
       state.workPeriods = workPeriods;
+    },
+    clear(state) {
+      const s = initialState();
+      Object.keys(s).forEach(key => {
+        state[key] = s[key];
+      });
     }
   },
   getters: {
@@ -23,7 +35,7 @@ export default {
         .then(response => {
           context.commit("set", response.data);
         })
-        .catch(e => {});
+        .catch(() => {});
     }
   }
 };

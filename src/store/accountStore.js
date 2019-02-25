@@ -1,17 +1,16 @@
-import Router from "../router";
-
 import { api } from "../utils/networkUtils";
 import { base_url } from "../utils/networkUtils";
 
+import Router from "../router";
 export default {
   namespaced: true,
   state: {
-    token: localStorage.getItem("access_token")
+    token: null
   },
+  computed: {},
   getters: {
     isLoggedIn: state => {
-      if (state.token) return true;
-      return false;
+      return state.token ? true : false;
     },
     getAuthorizationHeader: state => {
       if (state.token) return "Bearer " + state.token;
@@ -20,6 +19,7 @@ export default {
   },
   mutations: {
     set(state, token) {
+      state.token = token;
       localStorage.setItem("access_token", token);
     },
     clear(state) {
@@ -29,10 +29,22 @@ export default {
   },
   actions: {
     login(context, user) {
-      api.post(base_url + "/api/auth/login", user).then(response => {
-        context.commit("set", response.data.token);
-        Router.push("/");
-      });
+      api
+        .post(base_url + "/api/auth/login", user)
+        .then(response => {
+          context.commit("set", response.data.token);
+        })
+        .then(() => {
+          Router.push("/");
+        })
+        .catch(e => {
+          if (e.status === 401) {
+            console.log("Wrong credentials.");
+          }
+        });
+    },
+    logout() {
+      this.dispatch("clearAll");
     }
   }
 };

@@ -1,6 +1,13 @@
 import { api } from "../utils/networkUtils";
 import { base_url } from "../utils/networkUtils";
 
+function initialState() {
+  return {
+    departments: [],
+    isLoading: false
+  };
+}
+
 export default {
   namespaced: true,
   state: {
@@ -13,18 +20,28 @@ export default {
     },
     setLoading(state, isLoading) {
       state.isLoading = isLoading;
+    },
+    clear(state) {
+      const s = initialState();
+      Object.keys(s).forEach(key => {
+        state[key] = s[key];
+      });
     }
   },
+
   actions: {
     refresh(context) {
       context.commit("setLoading", true);
       api
         .get(base_url + "/api/department")
         .then(response => {
-          context.commit("set", response.data);
           context.commit("setLoading", false);
+          context.commit("set", response.data);
         })
-        .catch(e => {});
+        .catch(() => {});
     }
+  },
+  mounted() {
+    this.refresh();
   }
 };
