@@ -23,12 +23,7 @@
           :aria-expanded="showCollapse ? 'true' : 'false'"
         >Assigned users</b-button>
         <b-collapse class="mt-2" v-model="showCollapse" id="collapse">
-          <b-list-group>
-            <b-list-group-item
-              v-for="(user) in workPeriod.assignedUsers"
-              :key="user.id"
-            >{{user.firstName}}</b-list-group-item>
-          </b-list-group>
+          <UserTable :users="workPeriod.assignedUsers"></UserTable>
         </b-collapse>
       </div>
     </b-container>
@@ -36,13 +31,9 @@
 </template>
 
 <script>
+import UserTable from "../user/UserTable";
+import * as sorter from "../../utils/sortUtils";
 export default {
-  data() {
-    return {
-      showCollapse: false,
-      hover: false
-    };
-  },
   props: {
     name: String,
     workPeriods: [Array, Object],
@@ -51,6 +42,20 @@ export default {
     department: Object,
     address: Object,
     appointments: [Array, Object]
+  },
+  data() {
+    return {
+      showCollapse: false,
+      hover: false
+    };
+  },
+  methods: {
+    usersABC(users) {
+      return sorter.sortUserNamesABC(users);
+    }
+  },
+  components: {
+    UserTable
   }
 };
 </script>

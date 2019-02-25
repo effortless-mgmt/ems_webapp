@@ -2,7 +2,7 @@ import VueRouter from "vue-router";
 
 import LoginPage from "./components/login/LoginPage";
 import HomePage from "./components/HomePage";
-import Temps from "./components/temp/TempList";
+import Temps from "./components/temp/TempPage";
 import WorkPeriods from "./components/workPeriod/WorkPeriodList";
 import WorkPeriodItemPage from "./components/workPeriod/WorkPeriodItemPage";
 import UserItemPage from "./components/user/UserItemPage";

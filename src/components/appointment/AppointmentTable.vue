@@ -1,6 +1,6 @@
 <template>
   <div v-if="appointmentsSorted">
-    <table class="table table-striped table-hover" :per-page="20">
+    <table class="table table-striped table-hover">
       <thead class="thead-dark">
         <tr>
           <th scope="col" style="width: 5%">#</th>
