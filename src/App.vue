@@ -14,7 +14,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 
-import NavBar from "./components/TheNavBar.vue";
+import NavBar from "./components/navbar/TheNavBar";
 
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "bootstrap/dist/css/bootstrap.css";

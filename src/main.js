@@ -13,13 +13,13 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 
-import Router from "./router.js";
-import Store from "./store/store.js";
-
 import BootstrapVue from "bootstrap-vue";
 Vue.use(BootstrapVue);
-
+Vue.use(require("vue-moment"));
 Vue.config.productionTip = false;
+
+import Router from "./router.js";
+import Store from "./store/store.js";
 
 new Vue({
   router: Router,
