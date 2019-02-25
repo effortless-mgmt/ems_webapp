@@ -26,6 +26,9 @@ export default {
   getters: {
     getById: state => id => {
       return state.workPeriods.find(wp => wp.id === id);
+    },
+    getAppointmentsById: state => id => {
+      return state.workPeriods.find(wp => (wp.id = id)).appointments;
     }
   },
   actions: {

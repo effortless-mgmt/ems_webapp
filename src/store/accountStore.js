@@ -5,7 +5,8 @@ import Router from "../router";
 export default {
   namespaced: true,
   state: {
-    token: null
+    token: null,
+    user: null
   },
   computed: {},
   getters: {
@@ -15,15 +16,20 @@ export default {
     getAuthorizationHeader: state => {
       if (state.token) return "Bearer " + state.token;
       return null;
+    },
+    getUser: state => {
+      if (state.user) return state.user;
+      return null;
     }
   },
   mutations: {
-    set(state, token) {
+    setToken(state, token) {
       state.token = token;
       localStorage.setItem("access_token", token);
     },
     clear(state) {
       state.token = null;
+      state.user = null;
       localStorage.removeItem("access_token");
     }
   },
@@ -32,7 +38,8 @@ export default {
       api
         .post(base_url + "/api/auth/login", user)
         .then(response => {
-          context.commit("set", response.data.token);
+          context.commit("setToken", response.data.token);
+          context.commit("setUser", response.data.user);
         })
         .then(() => {
           Router.push("/");
