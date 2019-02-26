@@ -17,6 +17,7 @@
         </b-form-group>
         <b-button type="submit" variant="primary">Login</b-button>
       </b-form>
+      <div v-if="error" class="row errorMessage">{{ error[0].message }}</div>
     </b-container>
   </div>
 </template>
@@ -29,17 +30,34 @@ export default {
       password: ""
     };
   },
+  computed: {
+    error() {
+      return this.$store.getters.getErrors;
+    }
+  },
   methods: {
     login(evt) {
       evt.preventDefault();
-      this.$store.dispatch("account/login", {
-        username: this.username,
-        password: this.password
-      });
+      this.$store
+        .dispatch("account/login", {
+          username: this.username,
+          password: this.password
+        })
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch(e => {
+          console.log("This is the error:");
+          console.log(e.message);
+        });
     }
   }
 };
 </script>
 
 <style>
+.errorMessage {
+  justify-content: center;
+  color: red;
+}
 </style>

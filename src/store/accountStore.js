@@ -1,7 +1,6 @@
-import { api } from "../utils/networkUtils";
+import api from "../utils/networkUtils";
 import { base_url } from "../utils/networkUtils";
 
-import Router from "../router";
 export default {
   namespaced: true,
   state: {
@@ -27,6 +26,9 @@ export default {
       state.token = token;
       localStorage.setItem("access_token", token);
     },
+    setUser(state, user) {
+      state.user = user;
+    },
     clear(state) {
       state.token = null;
       state.user = null;
@@ -35,20 +37,18 @@ export default {
   },
   actions: {
     login(context, user) {
-      api
-        .post(base_url + "/api/auth/login", user)
-        .then(response => {
-          context.commit("setToken", response.data.token);
-          context.commit("setUser", response.data.user);
-        })
-        .then(() => {
-          Router.push("/");
-        })
-        .catch(e => {
-          if (e.status === 401) {
-            console.log("Wrong credentials.");
-          }
-        });
+      return new Promise((resolve, reject) => {
+        api
+          .post("/api/auth/login", user)
+          .then(response => {
+            context.commit("setToken", response.data.token);
+            context.commit("setUser", response.data.user);
+            resolve();
+          })
+          .catch(e => {
+            reject(e.message);
+          });
+      });
     },
     logout() {
       this.dispatch("clearAll");

@@ -3,27 +3,31 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 Vue.use(VueAxios, axios);
 
-import Store from "../store/store";
+import store from "../store/store";
+import router from "../router";
 
-export const api = axios.create();
+const base_url = "https://api.effortless.dk";
+const api = axios.create({
+  baseURL: base_url
+});
 api.interceptors.request.use(
   config => {
     config.headers.common["Authorization"] =
-      Store.getters["account/getAuthorizationHeader"];
+      store.getters["account/getAuthorizationHeader"];
     return config;
   },
   api.interceptors.response.use(
     response => {
+      store.commit("clearErrors");
       return response;
     },
     function(error) {
       if (error.response.status === 401) {
-        localStorage.removeItem("access_token");
-        Router.push("/login");
+        store.commit("clearAll");
       }
       return Promise.reject(error.response);
     }
   )
 );
 
-export const base_url = "https://api.effortless.dk";
+export default api;

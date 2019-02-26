@@ -7,6 +7,8 @@ import WorkPeriods from "./components/workPeriod/WorkPeriodList";
 import WorkPeriodItemPage from "./components/workPeriod/WorkPeriodItemPage";
 import UserItemPage from "./components/user/UserItemPage";
 
+// import store from "./store/store";
+
 const routes = [
   { path: "/login", component: LoginPage },
   { path: "/", component: HomePage },
@@ -29,8 +31,24 @@ const routes = [
   }
 ];
 
-export default new VueRouter({
+const router = new VueRouter({
   mode: "history",
   routes: routes
   // linkExactActiveClass: "is-active"
 });
+
+router.beforeEach((to, from, next) => {
+  router.app.$store.commit("clearErrors");
+  if (to.path != "/login" && !router.app.$store.getters["account/isLoggedIn"]) {
+    next("/login");
+    const error = new Error("Please log in.");
+    router.app.$store.commit("setErrors", error);
+  }
+  if (to.path == "/login" && router.app.$store.getters["account/isLoggedIn"]) {
+    next("/");
+  } else {
+    next();
+  }
+});
+
+export default router;
