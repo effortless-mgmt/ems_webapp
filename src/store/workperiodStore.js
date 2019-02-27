@@ -1,5 +1,4 @@
-import { api } from "../utils/networkUtils";
-import { base_url } from "../utils/networkUtils";
+import api from "../utils/networkUtils";
 
 function initialState() {
   return {
@@ -34,7 +33,7 @@ export default {
   actions: {
     refresh(context) {
       api
-        .get(base_url + "/api/workperiod")
+        .get("/api/workperiod")
         .then(response => {
           context.commit("set", response.data);
         })

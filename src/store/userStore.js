@@ -1,5 +1,4 @@
-import { api } from "../utils/networkUtils";
-import { base_url } from "../utils/networkUtils";
+import api from "../utils/networkUtils";
 
 function initialState() {
   return {
@@ -33,7 +32,7 @@ export default {
   actions: {
     getTemps(context) {
       api
-        .get(base_url + "/api/user?primaryRole=2")
+        .get("/api/user?primaryRole=2")
         .then(response => {
           context.commit("setTemps", response.data);
         })
