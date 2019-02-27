@@ -22,6 +22,9 @@ export default {
       Object.keys(s).forEach(key => {
         state[key] = s[key];
       });
+    },
+    setUser(state, user) {
+      state.users.find(u => u.userName === user.userName) = user;
     }
   },
   getters: {
@@ -37,6 +40,11 @@ export default {
           context.commit("setTemps", response.data);
         })
         .catch(() => {});
+    },
+    updateUser(context, user) {
+      api.put("/api/user/" + user.username, user).then(response => {
+        context.commit("setUser", user);
+      })
     }
   }
 };
