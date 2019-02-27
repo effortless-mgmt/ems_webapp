@@ -45,10 +45,6 @@ export default {
         })
         .then(() => {
           this.$router.push("/");
-        })
-        .catch(e => {
-          console.log("This is the error:");
-          console.log(e.message);
         });
     }
   }

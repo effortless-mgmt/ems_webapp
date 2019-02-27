@@ -43,8 +43,10 @@ router.beforeEach((to, from, next) => {
     next("/login");
     const error = new Error("Please log in.");
     router.app.$store.commit("setErrors", error);
-  }
-  if (to.path == "/login" && router.app.$store.getters["account/isLoggedIn"]) {
+  } else if (
+    to.path == "/login" &&
+    router.app.$store.getters["account/isLoggedIn"]
+  ) {
     next("/");
   } else {
     next();

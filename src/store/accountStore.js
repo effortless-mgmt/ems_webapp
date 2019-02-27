@@ -41,12 +41,14 @@ export default {
         api
           .post("/api/auth/login", user)
           .then(response => {
-            context.commit("setToken", response.data.token);
-            context.commit("setUser", response.data.user);
-            resolve();
+            if (response) {
+              context.commit("setToken", response.data.token);
+              context.commit("setUser", response.data.user);
+              resolve();
+            }
           })
           .catch(e => {
-            reject(e.message);
+            return e;
           });
       });
     },
