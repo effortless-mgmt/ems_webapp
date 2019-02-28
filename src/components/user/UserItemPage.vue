@@ -10,23 +10,23 @@
       <div v-if="!isEditable">
         <b-row>
           <b-col lg="1">Phone:</b-col>
-          <b-col lg="1">{{ user.phone }}</b-col>
+          <b-col lg="2">{{ phone }}</b-col>
         </b-row>
         <b-row>
           <b-col lg="1">Email:</b-col>
-          <b-col lg="1">{{ user.email }}</b-col>
+          <b-col lg="2">{{ email }}</b-col>
         </b-row>
         <b-row>
           <b-col lg="1">Address:</b-col>
-          <b-col v-if="user.address" lg="1">{{ user.address.readableAddress }}</b-col>
+          <b-col v-if="address" lg="6">{{ readableAddress }}</b-col>
         </b-row>
       </div>
       <b-form v-else>
         <b-form-group label-cols="1" label="Phone:" label-for="phone-input">
-          <b-input v-model="phone" id="phone-input" :placeholder="user.phone" :value="user.phone"></b-input>
+          <b-input v-model="phone" id="phone-input" :placeholder="phone" :value="phone"></b-input>
         </b-form-group>
         <b-form-group label-cols="1" label="Email:" label-for="email-input">
-          <b-input v-model="email" id="email-input" :placeholder="user.email" :value="user.email"></b-input>
+          <b-input v-model="email" id="email-input" :placeholder="phone" :value="phone"></b-input>
         </b-form-group>
         <b-form-group label-cols="1" label="Address:" label-for="address-input">
           <b-input v-model="address.street" id="address-input" placeholder="Street"></b-input>
@@ -41,15 +41,15 @@
       </b-form>
       <b-row v-if="!isEditable">
         <b-col md="1" offset-md="11" align-self="center">
-          <b-button @click="openEdit()" variant="primary">Edit</b-button>
+          <b-button @click="toggleEdit()" variant="primary">Edit</b-button>
         </b-col>
       </b-row>
       <b-row v-else>
         <b-col md="1" offset-md="10">
-          <b-button @click="openEdit()" variant="light">Cancel</b-button>
+          <b-button @click="toggleEdit()" variant="light">Cancel</b-button>
         </b-col>
         <b-col md="1">
-          <b-button @click="openEdit()" variant="primary">Accept</b-button>
+          <b-button @click="updateUser()" type="submit" variant="primary">Accept</b-button>
         </b-col>
       </b-row>
     </b-container>
@@ -76,17 +76,42 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters["users/getUserByUserName"](this.userName);
+      var temps = this.$store.state.users.temps;
+      return temps.find(u => u.userName === this.userName);
+    },
+    readableAddress() {
+      return (
+        this.address.street +
+        " " +
+        this.address.no +
+        ", " +
+        this.address.zipCode +
+        " " +
+        this.address.city +
+        ", " +
+        this.address.country
+      );
+    },
+    editedUser() {
+      return {
+        userName: this.username,
+        phone: this.phone,
+        email: this.email,
+        address: this.address
+      };
     }
   },
   methods: {
-    openEdit() {
+    toggleEdit() {
       if (!this.isEditable) {
         this.isEditable = true;
       } else this.isEditable = false;
-      console.log(this.phone);
     },
-    updateUser() {}
+    updateUser() {
+      console.log(this.editedUser);
+      this.$store.dispatch("users/updateUser", this.editedUser);
+      this.toggleEdit();
+    }
   },
   mounted() {
     this.username = this.user.userName;
@@ -95,7 +120,16 @@ export default {
     this.email = this.user.email;
 
     if (this.user.address != null) {
-      this.address = this.user.address;
+      this.address = {
+        street: this.user.address.street,
+        no: this.user.address.no,
+        floor: this.user.address.floor,
+        side: this.user.address.side,
+        city: this.user.address.city,
+        state: this.user.address.state,
+        zipCode: this.user.address.zipCode,
+        country: this.user.address.country
+      };
     } else {
       this.address = {
         street: "",

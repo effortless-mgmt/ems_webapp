@@ -1,9 +1,15 @@
 <template>
-  <UserTable :users="tempsABC"></UserTable>
+  <div>
+    <b-container>
+      <AddUserButton class="addButton"/>
+      <UserTable :users="tempsABC"></UserTable>
+    </b-container>
+  </div>
 </template>
 
 <script>
 import UserTable from "../user/UserTable";
+import AddUserButton from "../user/AddUserButton";
 import * as sorter from "../../utils/sortUtils";
 export default {
   computed: {
@@ -18,10 +24,14 @@ export default {
     this.$store.dispatch("users/getTemps");
   },
   components: {
-    UserTable
+    UserTable,
+    AddUserButton
   }
 };
 </script>
 
 <style>
+.addButton {
+  margin: 20px auto;
+}
 </style>
