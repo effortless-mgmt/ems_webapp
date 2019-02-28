@@ -65,7 +65,7 @@ export default {
             return resolve(response);
           })
           .catch(e => {
-            console.log(e.response.status);
+            console.log(e.response.data);
             if (e.response.status === 409) {
               return reject(e);
             }
