@@ -40,7 +40,6 @@ export default {
   color: #2c3e50;
 }
 h1 {
-  text-align: center;
   margin-top: 40px;
   margin-bottom: 20px;
 }
