@@ -1,6 +1,6 @@
 <template>
   <b-list-group v-if="workPeriods.length">
-    <workPeriod v-for="(item) in workPeriods" :key="item.name" :workPeriod="item"></workPeriod>
+    <workPeriod v-for="(item) in workPeriods" :key="item.id" :workPeriod="item"></workPeriod>
   </b-list-group>
 </template>
 

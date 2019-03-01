@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Login</h1>
+    <h1 class="login">Login</h1>
     <b-container>
       <b-form @submit="login">
         <b-form-group label="Username" label-for="usernameInput">
@@ -55,5 +55,8 @@ export default {
 .errorMessage {
   justify-content: center;
   color: red;
+}
+.login {
+  text-align: center;
 }
 </style>

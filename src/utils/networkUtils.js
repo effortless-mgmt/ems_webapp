@@ -5,7 +5,7 @@ Vue.use(VueAxios, axios);
 
 import store from "../store/store";
 
-const base_url = "https://api.effortless.dk";
+const base_url = "https://staging.effortless.dk";
 const api = axios.create({
   baseURL: base_url
 });
