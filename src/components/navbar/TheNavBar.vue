@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="lg" type="light" variant="light">
-    <b-navbar-brand>Effortless</b-navbar-brand>
+    <b-navbar-brand href="/">Effortless</b-navbar-brand>
     <b-navbar-toggle target="nav_collapse"/>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
@@ -21,18 +21,13 @@
           <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
         </b-nav-form>
       </b-navbar-nav>
-      <b-navbar-nav>
-        <b-nav-item-dropdown right>
-          <!-- Using button-content slot -->
-          <template slot="button-content">User</template>
-          <b-dropdown-item @click="logout()">Sign out</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
+      <UserDropDown class="dropDown"></UserDropDown>
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
+import UserDropDown from "./UserDropDown";
 export default {
   name: "navbar",
   computed: {
@@ -46,9 +41,16 @@ export default {
         this.$router.push("/login");
       });
     }
+  },
+  components: {
+    UserDropDown
   }
 };
 </script>
 
 <style>
+.dropDown {
+  margin-left: 20px;
+  margin-right: 20px;
+}
 </style>
