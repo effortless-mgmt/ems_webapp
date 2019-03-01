@@ -123,7 +123,7 @@
               <b-button type="submit" variant="primary">Accept</b-button>
             </b-col>
             <b-col md="1">
-              <b-button variant="danger">Cancel</b-button>
+              <b-button @click="onCancel" variant="danger">Cancel</b-button>
             </b-col>
           </b-row>
         </b-form>
@@ -168,14 +168,39 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      console.log(this.user);
       this.$store.dispatch("users/createUser", this.user).catch(e => {
         this.usernameIsTaken = "Username is already taken.";
-        // Promise.resolve();
       });
+      this.toggleCollapse();
+    },
+    onCancel() {
+      this.toggleCollapse();
+      this.reset();
     },
     toggleCollapse() {
       this.showCollapse = !this.showCollapse;
+    },
+    reset() {
+      this.usernameIsTaken = "";
+      this.showCollapse = false;
+      this.user.firstName = "";
+      this.user.firstName = "";
+      this.user.lastName = "";
+      this.user.phone = null;
+      this.user.email = "";
+      this.user.address.street = "";
+      this.user.address.no = null;
+      this.user.address.floor = "";
+      this.user.address.side = "";
+      this.user.address.city = "";
+      this.user.address.zipCode = "";
+      this.user.address.state = "";
+      this.user.address.country = "";
+      this.user.profilePictureUrl =
+        "https =//api.adorable.io/avatars/285/q.png";
+      this.user.userName = "";
+      this.user.passWord = "";
+      this.user.primaryRole = null;
     }
   }
 };
