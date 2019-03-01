@@ -6,6 +6,7 @@ import Temps from "./components/temp/TempPage";
 import WorkPeriods from "./components/workPeriod/WorkPeriodList";
 import WorkPeriodItemPage from "./components/workPeriod/WorkPeriodItemPage";
 import UserItemPage from "./components/user/UserItemPage";
+import AddUserForm from "./components/user/AddUserForm";
 
 // import store from "./store/store";
 
@@ -18,6 +19,11 @@ const routes = [
     name: "user",
     component: UserItemPage,
     props: true
+  },
+  {
+    path: "/user/new",
+    name: "newUser",
+    component: AddUserForm
   },
   {
     path: "/workperiods",

@@ -1,15 +1,14 @@
 <template>
   <div>
     <b-container>
-      <AddUserButton class="addButton"/>
       <UserTable :users="tempsABC"></UserTable>
+      <b-button @click="goToNewUserForm()" variant="primary">New User</b-button>
     </b-container>
   </div>
 </template>
 
 <script>
 import UserTable from "../user/UserTable";
-import AddUserButton from "../user/AddUserButton";
 import * as sorter from "../../utils/sortUtils";
 export default {
   computed: {
@@ -24,8 +23,12 @@ export default {
     this.$store.dispatch("users/getTemps");
   },
   components: {
-    UserTable,
-    AddUserButton
+    UserTable
+  },
+  methods: {
+    goToNewUserForm() {
+      this.$router.push({ name: "newUser" });
+    }
   }
 };
 </script>
