@@ -99,12 +99,7 @@
               label-for="username"
               label-align-sm="right"
             >
-              <b-input
-                v-model="user.userName"
-                required
-                id="username"
-                :invalidFeedback="usernameIsTaken"
-              ></b-input>
+              <b-input v-model="user.userName" required id="username"></b-input>
             </b-form-group>
             <b-form-group
               label-cols="3"
@@ -136,7 +131,6 @@
 export default {
   data() {
     return {
-      usernameIsTaken: "",
       showCollapse: false,
       user: {
         firstName: "",
@@ -168,9 +162,7 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      this.$store.dispatch("users/createUser", this.user).catch(e => {
-        this.usernameIsTaken = "Username is already taken.";
-      });
+      this.$store.dispatch("users/createUser", this.user).catch(e => {});
       this.toggleCollapse();
     },
     onCancel() {
@@ -181,7 +173,6 @@ export default {
       this.showCollapse = !this.showCollapse;
     },
     reset() {
-      this.usernameIsTaken = "";
       this.showCollapse = false;
       this.user.firstName = "";
       this.user.firstName = "";
