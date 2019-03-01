@@ -3,6 +3,7 @@
     <b-nav-item-dropdown right>
       <!-- Using button-content slot -->
       <template slot="button-content">{{ user.userName }}</template>
+      <b-dropdown-item @click="goToProfile()">Profile</b-dropdown-item>
       <b-dropdown-item @click="logout()">Sign out</b-dropdown-item>
     </b-nav-item-dropdown>
   </b-navbar-nav>
@@ -20,6 +21,9 @@ export default {
       this.$store.dispatch("account/logout").then(() => {
         this.$router.push("/login");
       });
+    },
+    goToProfile() {
+      console.log("Not implemented.");
     }
   }
 };
