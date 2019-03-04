@@ -11,11 +11,12 @@
         @row-clicked="goToUser"
         striped
         caption-top
+        hover
       >
         <template slot="table-caption">
           <b-row>
-            <b-col>All substitutes</b-col>
-            <b-col offset-md="7" md="1">
+            <b-col md="4">{{ caption }}</b-col>
+            <b-col offset-md="5" md="1">
               <small>Displaying</small>
             </b-col>
             <b-col md="1">
@@ -33,6 +34,7 @@
       </b-table>
     </div>
     <b-pagination
+      v-if="users"
       :total-rows="users.length"
       :per-page="perPage"
       v-model="currentPage"
@@ -75,7 +77,8 @@ export default {
   props: {
     users: {
       type: [Array, Object]
-    }
+    },
+    caption: String
   },
   computed: {
     intervalDisplayed() {
@@ -85,13 +88,19 @@ export default {
       var lower = (page - 1) * amount + 1;
       var upper = page * amount;
 
-      return (
-        (upper > items.length
-          ? lower + "-" + items.length
-          : lower + "-" + upper) +
-        " of " +
-        items.length
-      );
+      if (lower > items) {
+        this.currentPage = 1;
+      }
+
+      if (items) {
+        return (
+          (upper > items.length
+            ? lower + "-" + items.length
+            : lower + "-" + upper) +
+          " of " +
+          items.length
+        );
+      } else return null;
     }
   },
   methods: {

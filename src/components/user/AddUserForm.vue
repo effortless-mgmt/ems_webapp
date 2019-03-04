@@ -1,6 +1,7 @@
 <template>
   <b-container>
     <b-card bg-variant="light">
+      <h3>Create User</h3>
       <b-form @submit="onSubmit">
         <b-form-group label="Contact" label-cols="3" label-size="lg" label-class="font-weight-bold">
           <b-form-group

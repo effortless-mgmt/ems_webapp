@@ -18,6 +18,14 @@ Vue.use(BootstrapVue);
 Vue.use(require("vue-moment"));
 Vue.config.productionTip = false;
 
+// Font awesome
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faFilter, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(faFilter);
+library.add(faSearch);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+
 import Router from "./router.js";
 import Store from "./store/store.js";
 
