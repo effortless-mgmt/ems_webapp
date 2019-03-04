@@ -1,7 +1,12 @@
 <template>
   <b-container>
-    <b-card bg-variant="light">
-      <h3>Create User</h3>
+    <b-card
+      bg-variant="light"
+      header="Create User"
+      header-bg-variant="primary"
+      header-text-variant="white"
+      header-text-size="lg"
+    >
       <b-form @submit="onSubmit">
         <b-form-group label="Contact" label-cols="3" label-size="lg" label-class="font-weight-bold">
           <b-form-group

@@ -20,10 +20,20 @@ Vue.config.productionTip = false;
 
 // Font awesome
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faFilter, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFilter,
+  faSearch,
+  faPhone,
+  faEnvelope,
+  faAddressBook,
+  faAddressCard
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(faFilter);
 library.add(faSearch);
+library.add(faPhone);
+library.add(faEnvelope);
+library.add(faAddressCard);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 import Router from "./router.js";

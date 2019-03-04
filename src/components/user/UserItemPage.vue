@@ -1,50 +1,101 @@
 <template>
   <div v-if="user">
-    <b-container fluid>
-      <b-jumbotron>
-        <h1>{{ user.firstName }} {{ user.lastName }}</h1>
-
-        <b-img-lazy :src="user.profilePictureUrl" class="profilePic"></b-img-lazy>
-      </b-jumbotron>
+    <b-container>
+      <b-card
+        bg-variant="light"
+        :img-src="user.profilePictureUrl"
+        img-alt="Image"
+        img-height="320"
+        img-left
+        class="headerCard"
+      >
+        <b-row class>
+          <b-col md="10">
+            <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+          </b-col>
+          <b-col md="1" align-self="center">
+            <b-button
+              v-if="!isEditable"
+              @click="toggleEdit()"
+              variant="outline-primary"
+              class="editButton"
+            >Edit</b-button>
+          </b-col>
+        </b-row>
+        <div v-if="!isEditable">
+          <b-list-group>
+            <b-list-group-item>
+              <font-awesome-icon icon="phone"/>
+              {{ phone }}
+            </b-list-group-item>
+            <b-list-group-item>
+              <font-awesome-icon icon="envelope"/>
+              {{ email }}
+            </b-list-group-item>
+            <b-list-group-item>
+              <font-awesome-icon icon="address-card"/>
+              {{ readableAddress }}
+            </b-list-group-item>
+          </b-list-group>
+        </div>
+      </b-card>
 
       <div v-if="!isEditable">
-        <b-row>
-          <b-col lg="1">Phone:</b-col>
-          <b-col lg="2">{{ phone }}</b-col>
-        </b-row>
-        <b-row>
-          <b-col lg="1">Email:</b-col>
-          <b-col lg="2">{{ email }}</b-col>
-        </b-row>
-        <b-row>
-          <b-col lg="1">Address:</b-col>
-          <b-col v-if="address" lg="6">{{ readableAddress }}</b-col>
-        </b-row>
+        <b-card header="Experience">
+          <div class="mt-3">
+            <b-card-group deck v-for="i in 3" :key="i" style="margin: 10px auto;">
+              <UserDepartmentCard v-for="i in 3" :key="i"></UserDepartmentCard>
+            </b-card-group>
+          </div>
+        </b-card>
       </div>
-      <b-form v-else>
-        <b-form-group label-cols="1" label="Phone:" label-for="phone-input">
-          <b-input v-model="phone" id="phone-input" :placeholder="phone" :value="phone"></b-input>
+      <b-form v-else class="editForm">
+        <b-form-group label-cols="2" label="Contact" label-size="lg">
+          <b-form-group label-cols="1" label="Phone:" label-for="phone-input">
+            <b-input v-model="phone" id="phone-input" :placeholder="phone" :value="phone"></b-input>
+          </b-form-group>
+          <b-form-group label-cols="1" label="Email:" label-for="email-input">
+            <b-input v-model="email" id="email-input" :placeholder="phone" :value="phone"></b-input>
+          </b-form-group>
         </b-form-group>
-        <b-form-group label-cols="1" label="Email:" label-for="email-input">
-          <b-input v-model="email" id="email-input" :placeholder="phone" :value="phone"></b-input>
-        </b-form-group>
-        <b-form-group label-cols="1" label="Address:" label-for="address-input">
-          <b-input v-model="address.street" id="address-input" placeholder="Street"></b-input>
-          <b-input v-model="address.no" placeholder="Number" :value="address.no"></b-input>
-          <b-input v-model="address.floor" placeholder="Floor" :value="address.floor"></b-input>
-          <b-input v-model="address.side" placeholder="Side" :value="address.side"></b-input>
-          <b-input v-model="address.city" placeholder="City" :value="address.city"></b-input>
-          <b-input v-model="address.state" placeholder="State" :value="address.state"></b-input>
-          <b-input v-model="address.zipCode" placeholder="Zip Code" :value="address.zipCode"></b-input>
-          <b-input v-model="address.country" placeholder="Country" :value="address.country"></b-input>
+        <b-form-group label-cols="2" label="Address" label-size="lg">
+          <b-form-group label-cols="1" label="Street:" label-for="street">
+            <b-input v-model="address.street" id="street" placeholder="Street"></b-input>
+          </b-form-group>
+          <b-form-group label-cols="1" label="No:" label-for="no">
+            <b-input v-model="address.no" placeholder="Number" id="no" :value="address.no"></b-input>
+          </b-form-group>
+          <b-form-group label-cols="1" label="Floor:" label-for="floor">
+            <b-input v-model="address.floor" placeholder="Floor" id="floor" :value="address.floor"></b-input>
+          </b-form-group>
+          <b-form-group label-cols="1" label="Side:" label-for="side">
+            <b-input v-model="address.side" placeholder="Side" id="side" :value="address.side"></b-input>
+          </b-form-group>
+          <b-form-group label-cols="1" label="City:" label-for="city">
+            <b-input v-model="address.city" placeholder="City" id="city" :value="address.city"></b-input>
+          </b-form-group>
+          <b-form-group label-cols="1" label="State:" label-for="state">
+            <b-input v-model="address.state" placeholder="State" id="state" :value="address.state"></b-input>
+          </b-form-group>
+          <b-form-group label-cols="1" label="Zip:" label-for="zipCode">
+            <b-input
+              v-model="address.zipCode"
+              placeholder="Zip Code"
+              id="zipCode"
+              :value="address.zipCode"
+            ></b-input>
+          </b-form-group>
+          <b-form-group label-cols="1" label="Country:" label-for="country">
+            <b-input
+              v-model="address.country"
+              placeholder="Country"
+              id="country"
+              :value="address.country"
+            ></b-input>
+          </b-form-group>
         </b-form-group>
       </b-form>
-      <b-row v-if="!isEditable">
-        <b-col md="1" offset-md="11" align-self="center">
-          <b-button @click="toggleEdit()" variant="primary">Edit</b-button>
-        </b-col>
-      </b-row>
-      <b-row v-else>
+      <b-row v-if="isEditable">
         <b-col md="1" offset-md="10">
           <b-button @click="toggleEdit()" variant="light">Cancel</b-button>
         </b-col>
@@ -57,6 +108,7 @@
 </template>
 
 <script>
+import UserDepartmentCard from "./UserDepartmentCard";
 export default {
   data() {
     return {
@@ -142,12 +194,19 @@ export default {
         country: ""
       };
     }
-  }
+  },
+  components: { UserDepartmentCard }
 };
 </script>
 
 <style>
 .profilePic {
   width: 20%;
+}
+.editButton {
+  margin: auto;
+}
+.headerCard {
+  margin-bottom: 20px;
 }
 </style>
