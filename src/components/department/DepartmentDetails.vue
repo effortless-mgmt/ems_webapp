@@ -1,30 +1,22 @@
 <template>
-  <b-card style="margin: 20px auto;">
-    <h3>{{ name }}</h3>
+  <b-card style="margin-bottom: 20px">
+    <b-card-header>{{ name }}</b-card-header>
     <h5 class="wps">Work Periods</h5>
-
-    <b-container fluid>
-      <div v-for="(workPeriod, index) in workPeriods" :key="workPeriod.id">
+    <b-container>
+      <div v-for="(workPeriod) in workPeriods" :key="workPeriod.id">
         <b-row>
-          <h5 :id="'popover-'+workPeriod.id" variant="primary">{{ index + 1}} {{workPeriod.name}}</h5>
-          <b-popover
-            :target="'popover-'+workPeriod.id"
-            title="Address"
-            placement="right"
-            triggers="hover focus"
-            :content="workPeriod.department.address.readableAddress"
-          />
-          <b-col>{{ description }}</b-col>
+          <h5 :id="'popover-'+workPeriod.id" variant="primary">{{workPeriod.name}}</h5>
         </b-row>
-        <b-button
+        {{ workPeriod.appointments.length }}
+        <!-- <b-button
           @click="showCollapse = !showCollapse"
           :class="showCollapse ? 'collapsed' : null"
-          aria-controls="collapse"
+          :aria-controls="'collapse-'+workPeriod.id"
           :aria-expanded="showCollapse ? 'true' : 'false'"
         >Assigned users</b-button>
-        <b-collapse class="mt-2" v-model="showCollapse" id="collapse">
+        <b-collapse class="mt-2" v-model="showCollapse" :id="'collapse-'+ workPeriod.id">
           <UserTable :users="workPeriod.assignedUsers"></UserTable>
-        </b-collapse>
+        </b-collapse>-->
       </div>
     </b-container>
   </b-card>
