@@ -41,42 +41,38 @@ export default {
     };
   },
   computed: {
-    departments() {
-      return this.$store.state.departments.departments;
-    },
     workPeriods() {
-      return this.$store.state.workPeriods.workPeriods;
+      return this.$store.state.workPeriods.todaysWorkPeriods;
+    },
+
+    departments() {
+      const uniqueIds = [
+        ...new Set(this.workPeriods.map(wp => wp.department.id))
+      ];
+
+      var depts = [];
+
+      for (var i = 0; i < uniqueIds.length; i++) {
+        var temp = this.workPeriods.find(
+          wp => wp.department.id == uniqueIds[i]
+        );
+        depts.push(temp.department);
+      }
+      return depts;
     },
     isLoading() {
       return this.$store.state.departments.isLoading;
     }
   },
   mounted() {
-    this.$store.dispatch("departments/refresh");
-    this.$store.dispatch("workPeriods/refresh");
+    this.$store.dispatch("workPeriods/getTodaysWorkPeriods");
   },
   components: {
     departmentDetails
   },
   methods: {
     getDepartmentWorkPeriods(id) {
-      const today = new Date();
-      const wps = this.workPeriods.filter(wp => wp.department.id === id);
-      const wpsToday = wps.filter(wp => wp.appointments.length > 0);
-      var apps;
-      wpsToday.filter(wp => {
-        apps = wp.appointments.filter(app => {
-          var start = new Date(app.start);
-          return (
-            start.getDate() === today.getDate() &&
-            start.getMonth() === today.getMonth() &&
-            start.getFullYear() === today.getFullYear()
-          );
-        });
-        wp.appointments = apps;
-      });
-      console.log(wpsToday);
-      return wpsToday;
+      return this.workPeriods.filter(wp => wp.department.id === id);
     }
   }
 };

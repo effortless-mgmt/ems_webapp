@@ -139,7 +139,7 @@ export default {
         .then(() => {
           this.$router.push("/temps");
         })
-        .catch(e => {});
+        .catch(() => {});
     },
     onCancel() {
       this.$router.push("/temps");
