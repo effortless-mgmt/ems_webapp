@@ -2,14 +2,16 @@ import api from "../utils/networkUtils";
 
 function initialState() {
   return {
-    workPeriods: []
+    workPeriods: [],
+    todaysWorkPeriods: []
   };
 }
 
 export default {
   namespaced: true,
   state: {
-    workPeriods: []
+    workPeriods: [],
+    todaysWorkPeriods: []
   },
   mutations: {
     set(state, workPeriods) {
@@ -20,6 +22,9 @@ export default {
       Object.keys(s).forEach(key => {
         state[key] = s[key];
       });
+    },
+    setToday(state, workPeriods) {
+      state.todaysWorkPeriods = workPeriods;
     }
   },
   getters: {
@@ -27,7 +32,7 @@ export default {
       return state.workPeriods.find(wp => wp.id === id);
     },
     getAppointmentsById: state => id => {
-      return state.workPeriods.find(wp => (wp.id = id)).appointments;
+      return state.workPeriods.find(wp => wp.id === id).appointments;
     }
   },
   actions: {
@@ -36,6 +41,15 @@ export default {
         .get("/api/workperiod")
         .then(response => {
           context.commit("set", response.data);
+        })
+        .catch(() => {});
+    },
+    getTodaysWorkPeriods(context) {
+      api
+        .get("/api/workperiod?today=true")
+        .then(response => {
+          console.log(response.data);
+          context.commit("setToday", response.data);
         })
         .catch(() => {});
     }

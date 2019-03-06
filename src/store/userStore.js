@@ -1,5 +1,4 @@
 import api from "../utils/networkUtils";
-import { reject } from "q";
 
 function initialState() {
   return {

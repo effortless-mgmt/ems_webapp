@@ -1,32 +1,21 @@
 <template>
-  <b-card style="margin: 20px auto;">
-    <h3>{{ name }}</h3>
-    <h5 class="wps">Work Periods</h5>
-
-    <b-container fluid>
-      <div v-for="(workPeriod, index) in workPeriods" :key="workPeriod.id">
-        <b-row>
-          <h5 :id="'popover-'+workPeriod.id" variant="primary">{{ index + 1}} {{workPeriod.name}}</h5>
-          <b-popover
-            :target="'popover-'+workPeriod.id"
-            title="Address"
-            placement="right"
-            triggers="hover focus"
-            :content="workPeriod.department.address.readableAddress"
-          />
-          <b-col>{{ description }}</b-col>
-        </b-row>
-        <b-button
-          @click="showCollapse = !showCollapse"
-          :class="showCollapse ? 'collapsed' : null"
-          aria-controls="collapse"
-          :aria-expanded="showCollapse ? 'true' : 'false'"
-        >Assigned users</b-button>
-        <b-collapse class="mt-2" v-model="showCollapse" id="collapse">
-          <UserTable :users="workPeriod.assignedUsers"></UserTable>
-        </b-collapse>
-      </div>
-    </b-container>
+  <b-card style="margin-bottom: 10px" header-border-variant="dark">
+    <b-row slot="header">
+      <b-col md="11" style="font-weight: 550">{{name}}</b-col>
+      <b-col>
+        <b-badge :variant="badgeColor">{{totalAssignedUsers}}</b-badge>
+      </b-col>
+    </b-row>
+    <div v-for="(workPeriod) in workPeriods" :key="workPeriod.id">
+      <b-row>
+        <b-col md="3">
+          <div id="name">{{workPeriod.name}}</div>
+        </b-col>
+        <b-col align-self="center">
+          <b-badge variant="primary">{{ workPeriod.appointments.length }}</b-badge>
+        </b-col>
+      </b-row>
+    </div>
   </b-card>
 </template>
 
@@ -45,9 +34,34 @@ export default {
   },
   data() {
     return {
+      isFullyBooked: false,
       showCollapse: false,
       hover: false
     };
+  },
+  computed: {
+    totalAssignedUsers() {
+      const occupiedApps = [];
+      const unoccupiedApps = [];
+      this.workPeriods.forEach(wp => {
+        wp.appointments.forEach(a => {
+          if (a.owner) {
+            occupiedApps.push(a);
+          } else {
+            unoccupiedApps.push(a);
+          }
+        });
+      });
+      const total = occupiedApps.length + unoccupiedApps.length;
+      const occupied = occupiedApps.length;
+
+      if (occupied == total) this.isFullyBooked = true;
+
+      return occupied + "/" + total;
+    },
+    badgeColor() {
+      return this.isFullyBooked ? "success" : "warning";
+    }
   },
   methods: {
     usersABC(users) {

@@ -38,12 +38,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  padding-top: 60px;
 }
 h1 {
   margin-top: 40px;
   margin-bottom: 20px;
 }
 .router-link-active {
-  font-weight: 600;
+  color: white !important;
 }
 </style>

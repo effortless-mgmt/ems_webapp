@@ -1,6 +1,8 @@
 <template>
-  <b-navbar toggleable="lg" type="light" variant="light">
-    <b-navbar-brand href="/">Effortless</b-navbar-brand>
+  <b-navbar toggleable="lg" fixed="top" type="dark" class="theNavbar">
+    <b-navbar-brand href="/">
+      <img src="../../assets/ems_logo.png" class="ems_logo">
+    </b-navbar-brand>
     <b-navbar-toggle target="nav_collapse"/>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
@@ -8,7 +10,7 @@
           <router-link class="nav-link" to="/" exact>Home</router-link>
         </b-nav-item>
         <b-nav-item v-if="isLoggedIn">
-          <router-link class="nav-link" to="/temps">Temps</router-link>
+          <router-link class="nav-link temps" to="/temps">Temps</router-link>
         </b-nav-item>
         <b-nav-item v-if="isLoggedIn">
           <router-link class="nav-link" to="/workperiods">Work Periods</router-link>
@@ -49,6 +51,13 @@ export default {
 </script>
 
 <style>
+.ems_logo {
+  max-width: 40px;
+}
+.theNavbar {
+  max-height: 50px;
+  background: darkslategrey;
+}
 .dropDown {
   margin-left: 20px;
   margin-right: 20px;

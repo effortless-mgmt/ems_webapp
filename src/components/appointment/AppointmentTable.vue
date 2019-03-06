@@ -50,7 +50,6 @@ export default {
 <style>
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
-  background-color: darkslategrey;
-  color: white;
+  background-color: #ccc;
 }
 </style>
