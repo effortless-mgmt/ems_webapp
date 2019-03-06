@@ -1,26 +1,51 @@
 <template>
-  <b-card style="margin-bottom: 10px" header-border-variant="dark">
-    <b-row slot="header">
-      <b-col md="11" style="font-weight: 550">{{name}}</b-col>
-      <b-col>
-        <b-badge :variant="badgeColor">{{totalAssignedUsers}}</b-badge>
-      </b-col>
-    </b-row>
-    <div v-for="(workPeriod) in workPeriods" :key="workPeriod.id">
-      <b-row>
-        <b-col md="3">
-          <div id="name">{{workPeriod.name}}</div>
-        </b-col>
-        <b-col align-self="center">
-          <b-badge variant="primary">{{ workPeriod.appointments.length }}</b-badge>
-        </b-col>
-      </b-row>
+  <b-card style="margin-bottom: 10px;">
+    <div slot="header" style="font-weight: 600">
+      {{name}}
+      <b-badge :variant="badgeColor">{{totalAssignedUsers}}</b-badge>
     </div>
+    <b-card-body>
+      <b-card-text v-for="(workPeriod) in workPeriods" :key="workPeriod.id">
+        <b-row>
+          <b-col
+            @click="goToWorkPeriod(workPeriod.id)"
+            @mouseover="hover = true"
+            @mouseleave="hover = false"
+            :class="{ active: hover }"
+            align-self="center"
+          >{{workPeriod.name}}</b-col>
+          <b-col md="6" :id="'popoverContainer'+workPeriod.id" class="text-right">
+            <b-button
+              :id="'usersPopover'+workPeriod.id"
+              variant="info"
+              @click="triggerPopover"
+            >{{ workPeriod.appointments.length }} Temps</b-button>
+          </b-col>
+
+          <b-popover
+            :target="'usersPopover'+workPeriod.id"
+            triggers="click"
+            :show.sync="popoverShow"
+            placement="auto"
+            :container="'popoverContainer'+workPeriod.id"
+            ref="popover"
+            @show="onShow"
+            @shown="onShown"
+            @hidden="onHidden"
+          >
+            <template slot="title">Temps</template>
+            <AppointmentPopoverContent :appointments="workPeriod.appointments"></AppointmentPopoverContent>
+          </b-popover>
+        </b-row>
+        <hr v-if="workPeriods.length > 1" class="my-4">
+      </b-card-text>
+    </b-card-body>
   </b-card>
 </template>
 
 <script>
 import UserTable from "../user/UserTable";
+import AppointmentPopoverContent from "../appointment/AppointmentPopoverContent";
 import * as sorter from "../../utils/sortUtils";
 export default {
   props: {
@@ -36,7 +61,8 @@ export default {
     return {
       isFullyBooked: false,
       showCollapse: false,
-      hover: false
+      hover: false,
+      popoverShow: false
     };
   },
   computed: {
@@ -66,10 +92,21 @@ export default {
   methods: {
     usersABC(users) {
       return sorter.sortUserNamesABC(users);
+    },
+    goToWorkPeriod(id) {
+      this.$router.push({ name: "workPeriod", params: { id: id } });
+    },
+    onShow() {},
+    onShown() {},
+    onHidden() {},
+    triggerPopover() {
+      this.$root.$emit("bv::hide::popover");
+      this.popoverShow = !this.popoverShow;
     }
   },
   components: {
-    UserTable
+    UserTable,
+    AppointmentPopoverContent
   }
 };
 </script>
@@ -78,5 +115,9 @@ export default {
 .wps {
   margin-top: 20px;
   font-weight: 700;
+}
+.active {
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>

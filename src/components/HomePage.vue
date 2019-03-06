@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-container>
+    <Toasts></Toasts>
+    <b-container id="homePageContainer">
       <b-jumbotron bg-variant="info" text-variant="white">
         <template slot="header">Today</template>
         <template
@@ -16,28 +17,44 @@
       </b-jumbotron>
       <div v-if="userSearchInput">Displaying results for "{{ userSearchInput }}"</div>
       <div v-if="!isLoading">
-        <departmentDetails
+        <!-- <b-card-group columns> -->
+        <DepartmentDetails
           v-for="(item) in departments"
           :key="item.id"
           :name="item.name"
           :workPeriods="getDepartmentWorkPeriods(item.id)"
           :address="item.address"
-        ></departmentDetails>
+        ></DepartmentDetails>
+        <!-- </b-card-group> -->
       </div>
       <div v-else class="d-flex justify-content-center mb-3">
         <b-spinner class="m1-auto" type="grow" label="Loading..."/>
       </div>
+      <CreateSmsModal></CreateSmsModal>
+      <!-- <b-alert
+        :show="hasSentMessage"
+        dismissible
+        fade
+        variant="success"
+        @dismissed="clearMessage()"
+        @dismiss-count-down="countDownChanged"
+      >-->
+      <div>You have succesfully sent a message to {{ message.recipients.length }} recipients.</div>
+      <div>Your message: {{ message.message }}</div>
+      <!-- </b-alert> -->
     </b-container>
   </div>
 </template>
 
 <script>
-import departmentDetails from "./department/DepartmentDetails";
+import CreateSmsModal from "./communication/CreateSmsModal";
+import DepartmentDetails from "./department/DepartmentDetails";
 
 export default {
   data() {
     return {
-      userSearchInput: ""
+      userSearchInput: "",
+      dismissCountDown: 0
     };
   },
   computed: {
@@ -62,17 +79,38 @@ export default {
     },
     isLoading() {
       return this.$store.state.departments.isLoading;
+    },
+    message() {
+      return {
+        recipients: this.$store.state.communication.smsRecipients,
+        message: this.$store.state.communication.message
+      };
+    },
+    hasSentMessage() {
+      var hasSent = Object.keys(this.message).length > 0 ? true : false;
+      if (hasSent) this.dismissCountDown = 5;
+      return hasSent;
     }
   },
   mounted() {
     this.$store.dispatch("workPeriods/getTodaysWorkPeriods");
   },
   components: {
-    departmentDetails
+    DepartmentDetails,
+    CreateSmsModal
   },
   methods: {
     getDepartmentWorkPeriods(id) {
       return this.workPeriods.filter(wp => wp.department.id === id);
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
+      if (this.dismissCountDown == 0) {
+        this.clearMessage();
+      }
+    },
+    clearMessage() {
+      this.$store.dispatch("communication/reset");
     }
   }
 };
