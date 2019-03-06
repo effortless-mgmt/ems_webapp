@@ -9,7 +9,6 @@
     <div v-for="(workPeriod) in workPeriods" :key="workPeriod.id">
       <b-row>
         <b-col md="3">
-          <label for="name">Work Period</label>
           <div id="name">{{workPeriod.name}}</div>
         </b-col>
         <b-col align-self="center">
