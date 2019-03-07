@@ -31,24 +31,13 @@
         <b-spinner class="m1-auto" type="grow" label="Loading..."/>
       </div>
       <CreateSmsModal></CreateSmsModal>
-      <!-- <b-alert
-        :show="hasSentMessage"
-        dismissible
-        fade
-        variant="success"
-        @dismissed="clearMessage()"
-        @dismiss-count-down="countDownChanged"
-      >-->
-      <div>You have succesfully sent a message to {{ message.recipients.length }} recipients.</div>
-      <div>Your message: {{ message.message }}</div>
-      <!-- </b-alert> -->
     </b-container>
   </div>
 </template>
 
 <script>
-import CreateSmsModal from "./communication/CreateSmsModal";
-import DepartmentDetails from "./department/DepartmentDetails";
+import CreateSmsModal from "../communication/CreateSmsModal";
+import DepartmentDetails from "./DepartmentDetails";
 
 export default {
   data() {
@@ -59,6 +48,36 @@ export default {
   },
   computed: {
     workPeriods() {
+      if (this.userSearchInput) {
+        return this.$store.state.workPeriods.todaysWorkPeriods.filter(wp => {
+          return (
+            wp.name
+              .toLowerCase()
+              .includes(this.userSearchInput.toLowerCase()) ||
+            wp.department.name
+              .toLowerCase()
+              .includes(this.userSearchInput.toLowerCase()) ||
+            wp.appointments.some(a => {
+              if (a.owner) {
+                return (
+                  a.owner.firstName
+                    .toLowerCase()
+                    .includes(this.userSearchInput.toLowerCase()) ||
+                  a.owner.lastName
+                    .toLowerCase()
+                    .includes(this.userSearchInput.toLowerCase()) ||
+                  a.owner.phone
+                    .toLowerCase()
+                    .includes(this.userSearchInput.toLowerCase()) ||
+                  a.owner.email
+                    .toLowerCase()
+                    .includes(this.userSearchInput.toLowerCase())
+                );
+              }
+            })
+          );
+        });
+      }
       return this.$store.state.workPeriods.todaysWorkPeriods;
     },
 
