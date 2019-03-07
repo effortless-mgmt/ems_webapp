@@ -7,6 +7,7 @@ import userStore from "./userStore";
 import accountStore from "./accountStore";
 import departmentStore from "./departmentStore";
 import workperiodStore from "./workperiodStore";
+import communicationStore from "./communicationStore";
 
 export default new Vuex.Store({
   namespaced: true,
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     account: accountStore,
     users: userStore,
     departments: departmentStore,
-    workPeriods: workperiodStore
+    workPeriods: workperiodStore,
+    communication: communicationStore
   },
   mutations: {
     setErrors(state, errors) {

@@ -42,20 +42,6 @@
     />
     <small class="row justify-content-center">{{intervalDisplayed}}</small>
     <div class="row justify-content-center"></div>
-    <!-- <table class="table table-hover">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col" style="width: 5%">#</th>
-          <th scope="col" style="width: 20%">Name</th>
-          <th scope="col" style="width: 20%">Phone</th>
-          <th scope="col" style="width: 20%">Email</th>
-          <th scope="col" style="width: 20%">Zip</th>
-        </tr>
-      </thead>
-      <tbody>
-        <UserTableRow v-for="(item, index) in users" :key="item.id" :user="item" :index="index"></UserTableRow>
-      </tbody>
-    </table>-->
   </div>
 </template>
 

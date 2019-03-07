@@ -48,7 +48,6 @@ export default {
       api
         .get("/api/workperiod?today=true")
         .then(response => {
-          console.log(response.data);
           context.commit("setToday", response.data);
         })
         .catch(() => {});
