@@ -9,22 +9,6 @@
     <b-card-body>
       <b-card-text v-for="(workPeriod) in workPeriods" :key="workPeriod.id">
         <b-row>
-          <!-- <b-col
-            @click="goToWorkPeriod(workPeriod.id)"
-            :id="'workPeriod'+workPeriod.id"
-            @mouseover="hover = true"
-            @mouseleave="hover = false"
-            :class="{ active: hover }"
-            align-self="center"
-          >
-            <div v-if="totalOccupiedAppointments(workPeriod).free > 0">
-              <b-badge
-                pill
-                variant="warning"
-              >{{totalOccupiedAppointments(workPeriod).free}} unbooked</b-badge>
-            </div>
-            <div>{{workPeriod.name}}</div>
-          </b-col>-->
           <WorkPeriodRow
             :workPeriod="workPeriod"
             :appointmentsInfo="workPeriodOccupiedAppointments(workPeriod)"

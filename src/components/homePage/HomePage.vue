@@ -17,7 +17,6 @@
       </b-jumbotron>
       <div v-if="userSearchInput">Displaying results for "{{ userSearchInput }}"</div>
       <div v-if="!isLoading">
-        <!-- <b-card-group columns> -->
         <DepartmentDetails
           v-for="(item) in departments"
           :key="item.id"
@@ -25,7 +24,6 @@
           :workPeriods="getDepartmentWorkPeriods(item.id)"
           :address="item.address"
         ></DepartmentDetails>
-        <!-- </b-card-group> -->
       </div>
       <div v-else class="d-flex justify-content-center mb-3">
         <b-spinner class="m1-auto" type="grow" label="Loading..."/>

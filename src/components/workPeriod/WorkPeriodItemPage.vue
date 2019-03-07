@@ -1,7 +1,7 @@
 <template>
   <div v-if="workPeriod">
-    <h1>{{ workPeriod.department.name }}</h1>
-    <b-container fluid>
+    <b-container>
+      <h1>{{ workPeriod.department.name }}</h1>
       <div class="panel">
         <div class="panel-heading">
           <h4 class="panel-title">{{ workPeriod.name }}</h4>

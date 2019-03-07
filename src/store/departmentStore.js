@@ -32,6 +32,11 @@ export default {
       });
     }
   },
+  getters: {
+    getByCompanyId: state => id => {
+      return state.departments.filter(d => d.company.id == id);
+    }
+  },
   actions: {
     refresh(context) {
       context.commit("setLoading", true);
