@@ -8,6 +8,7 @@ import accountStore from "./accountStore";
 import departmentStore from "./departmentStore";
 import workperiodStore from "./workperiodStore";
 import communicationStore from "./communicationStore";
+import companyStore from "./companyStore";
 
 export default new Vuex.Store({
   namespaced: true,
@@ -17,10 +18,11 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   modules: {
     account: accountStore,
-    users: userStore,
+    communication: communicationStore,
+    companies: companyStore,
     departments: departmentStore,
-    workPeriods: workperiodStore,
-    communication: communicationStore
+    users: userStore,
+    workPeriods: workperiodStore
   },
   mutations: {
     setErrors(state, errors) {
@@ -49,6 +51,7 @@ export default new Vuex.Store({
       commit("users/clear");
       commit("workPeriods/clear");
       commit("account/clear");
+      commit("companies/clear");
       commit("clearErrors");
     }
   }

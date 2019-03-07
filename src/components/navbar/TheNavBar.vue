@@ -13,7 +13,7 @@
           <router-link class="nav-link temps" to="/temps">Temps</router-link>
         </b-nav-item>
         <b-nav-item v-if="isLoggedIn">
-          <router-link class="nav-link" to="/workperiods">Work Periods</router-link>
+          <router-link class="nav-link" to="/companies">Companies</router-link>
         </b-nav-item>
       </b-navbar-nav>
 

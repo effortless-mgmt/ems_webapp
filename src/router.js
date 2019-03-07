@@ -3,6 +3,9 @@ import VueRouter from "vue-router";
 import LoginPage from "./components/login/LoginPage";
 import HomePage from "./components/homePage/HomePage";
 import Temps from "./components/temp/TempPage";
+import CompaniesPage from "./components/company/CompaniesPage";
+import CompanyProfile from "./components/company/CompanyProfile";
+import DepartmentProfile from "./components/department/DepartmentProfile";
 import WorkPeriods from "./components/workPeriod/WorkPeriodList";
 import WorkPeriodItemPage from "./components/workPeriod/WorkPeriodItemPage";
 import UserItemPage from "./components/user/UserItemPage";
@@ -24,6 +27,22 @@ const routes = [
     path: "/user/new",
     name: "newUser",
     component: AddUserForm
+  },
+  {
+    path: "/companies",
+    component: CompaniesPage
+  },
+  {
+    path: "/companies/:id",
+    name: "company",
+    component: CompanyProfile,
+    props: true
+  },
+  {
+    path: "/companies/:companyId/department/:id",
+    name: "department",
+    component: DepartmentProfile,
+    props: true
   },
   {
     path: "/workperiods",

@@ -33,6 +33,9 @@ export default {
     },
     getAppointmentsById: state => id => {
       return state.workPeriods.find(wp => wp.id === id).appointments;
+    },
+    getByDepartmentId: state => id => {
+      return state.workPeriods.filter(wp => wp.department.id == id);
     }
   },
   actions: {
